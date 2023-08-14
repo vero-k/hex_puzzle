@@ -1,0 +1,63 @@
+import BackGround from "./BackGround"
+import Board from "../board/Board"
+import {Player} from "../player/Player"
+
+import * as THREE from "three"
+
+import { Sky } from "@react-three/drei"
+
+import { Canvas} from "@react-three/fiber"
+import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
+
+import { PerspectiveCamera } from '@react-three/drei'
+
+
+
+export const FirstPersonWorld = (props: any) => {
+    return (
+        <>
+
+            <Canvas>
+
+                <PerspectiveCamera>
+
+                <Sky />
+                <ambientLight color={"white"} intensity={0.3} />
+                
+                <primitive object={new THREE.AxesHelper(100)} />
+                <gridHelper args={[200, 200, `white`, `gray`]}/>
+
+
+                <Player />
+
+                <Board 
+                {...props}
+                rotation={[0, 0, 0]}
+                position={[0, 0, -10]}
+                />
+
+
+                <BackGround 
+                    {...props}
+                    position={[0, 0, -100]}
+                />
+
+
+                </PerspectiveCamera>
+
+                <EffectComposer>
+
+                <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} />
+                <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+                <Noise opacity={0.02} />
+                <Vignette eskil={false} offset={0.1} darkness={1.1} />
+
+                </EffectComposer>
+            
+
+            
+            </Canvas>
+        
+        </>
+    )
+}

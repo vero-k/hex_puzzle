@@ -1,0 +1,53 @@
+
+import Board from "../board/Board"
+import * as THREE from "three"
+
+
+import { Canvas} from "@react-three/fiber"
+import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
+import { BirdsEyeCamera } from "./BirdsEyeCamera"
+import { PerspectiveCamera } from '@react-three/drei'
+import { useEffect, useState } from "react"
+
+export const BirdEyeWorld = (props: any) => {
+
+    const [camPos, setCamPos] = useState(new THREE.Vector3(props.gridConstants.gridWidth / 2, Math.max(props.gridConstants.gridWidth / 2 / Math.tan(45), props.gridConstants.gridHeight / 2 / Math.tan(45)), props.gridConstants.gridHeight / 2))
+
+    useEffect(() => {
+
+    }, [])
+
+
+    return (
+        <>
+
+            <Canvas>
+
+            <PerspectiveCamera position={camPos} fov={90}  />
+
+            <ambientLight color={"white"} intensity={0.3} />
+            
+            <primitive object={new THREE.AxesHelper(100)} />
+            <gridHelper args={[200, 200, `white`, `gray`]}/>
+
+            
+            <Board 
+              {...props}
+              rotation={[0, 0, 0]}
+              position={[0, 0, -10]}
+            />
+
+
+            <EffectComposer>
+
+            <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} />
+            <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+            <Noise opacity={0.02} />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+
+            </EffectComposer>
+           
+            </Canvas>
+        </>
+    )
+}
