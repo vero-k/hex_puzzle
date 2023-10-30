@@ -2,11 +2,14 @@ import axios from 'axios'
 
 import { useState, useEffect } from "react"
 
-import  Game  from './components/game/Game'
+import  {Game}  from './components/game/Game'
 
 import { Buffer } from 'buffer'
 
-
+import Spinner from 'react-bootstrap/Spinner';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 interface HexImageData {
@@ -187,31 +190,30 @@ export default function Loading (props: any) {
 
     if(creating){
         return (
-            <>
-            <div
-                style={{ width: "100vw", height: "100vh" }}
+            <Container
+              style={{
+                alignContent: "center",
+                alignSelf: "center",
+                height: "50vh"
+              }}
             >
-                waiting
 
-            </div>
-            
-            </>
+              <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+
+            </Container>
     
         )
     } else {
         return (
-            <>
-            <div
-                style={{ width: "100vw", height: "100vh" }}
-            >
+            
                     <Game 
                         {...props}
                         baseImgTable={baseImgTable}
                         modTrackerTable={modTrackerTable}
                     />
-            </div>
-            
-            </>
+
     
         )
     }

@@ -25,7 +25,7 @@ export function BaseHex(props: any) {
   const changeTexture = (props: any, e: any) => {
     if(currentTextureKey){
       const nr = currentTextureNr
-      if(currentTextureNr > 0){
+      if(currentTextureNr > 0 && props.currentToolOp === currentTextureKey){
         const newNr = currentTextureNr - 1
         const key = table.get(newNr).type
         const img = loader.load(table.get(newNr).image)

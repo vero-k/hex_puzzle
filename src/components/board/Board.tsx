@@ -73,9 +73,11 @@ export default function Board(props: any){
 
 
     return(
+        
         <group
             rotation={[0, 0, 0]}
-            position={[0, 0, 0]}
+            position={[-10, 2, 0]}
+            scale={[1, 1, 1]}
         >
             
 

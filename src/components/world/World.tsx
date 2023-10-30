@@ -4,60 +4,60 @@ import {Player} from "../player/Player"
 
 import * as THREE from "three"
 
-import { Sky } from "@react-three/drei"
+import { PerspectiveCamera, Sky } from "@react-three/drei"
 
-import { Canvas} from "@react-three/fiber"
+import { Canvas, useThree} from "@react-three/fiber"
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
-import { PerspectiveCamera } from '@react-three/drei'
-import { BirdsEyeCamera } from "../camera/BirdsEyeCamera"
-import { FirstPersonCamera } from "../camera/FirstPersonCamera"
-import { useState } from "react"
 
+import { useRef, useState} from "react"
+import { Controls } from '../controlpanels/Controls'
 
 
 export const World = (props: any) => {
 
     console.log("render World")
-    const isBirdEye = props.isBirdEye
     
     const [currentTile, setCurrentTileParent] = useState(props.currentConstellation.currentTile)
 
     return (
-        <>
+        <div
+            style={{height:"80vh"}}
+        >
 
             <Canvas>
 
-                <PerspectiveCamera/> 
 
-                {isBirdEye && <BirdsEyeCamera {...props}/>}
-                {!isBirdEye && <FirstPersonCamera {...props} currentTile={currentTile} />}
-
+                <Controls 
+                    currentTile={currentTile}
+                />
+                
                 
 
                 <ambientLight color={"white"} intensity={0.5} />
 
                 <primitive object={new THREE.AxesHelper(100)} />
                 
-                {isBirdEye && <gridHelper args={[200, 200, `white`, `gray`]}/>}
-                {!isBirdEye && <gridHelper args={[200, 200, `blue`, `pink`]}/> }
-
                 <Player />
+
+                <PerspectiveCamera
+                    position={[-2, 8, -10]}
+                >
 
                 <Board 
                 {...props}
-                rotation={[0, 0, 0]}
-                position={[0, 0, -10]}
-                setCurrentTileParent={setCurrentTileParent}
+                rotation={[Math.PI /2, 0, 0]}
+                position={[-10, -10, -10]}
+                currentTile={currentTile}
+                setCurrentTileParent={props.setCurrentTile}
+                
                 />
-
                 
-                
-            
+                </PerspectiveCamera>
 
             
             </Canvas>
         
-        </>
+        </div>
     )
 }

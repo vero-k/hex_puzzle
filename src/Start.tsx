@@ -12,7 +12,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 
 import Footer from './components/controlpanels/Footer'
-import Header from './components/controlpanels/Header'
+import {Header} from './components/controlpanels/Header'
 import Creation from './Creation'
 
 

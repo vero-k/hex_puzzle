@@ -1,48 +1,63 @@
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useContext, createContext } from "react"
 
-import { Menu } from '../controlpanels/Menu'
-import {PerspectiveMenu} from '../controlpanels/PerspectiveMenu'
-import { EndGameModal } from "../controlpanels/EndGameModal"
-import { GameHeader } from "../controlpanels/GameHeader"
+
+import { GameMenu } from "../controlpanels/GameMenu"
+import { GameFooter } from "../controlpanels/GameFooter"
+
 import { World } from '../world/World'
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-export default function Game(props: any) {
 
-  const [isBirdEye, setIsBirdEye] = useState(true)
-  const [modalShow, setModalShow] = useState(false);
+export const PerspectiveContext = createContext('birdview')
+
+export function Game(props: any) {
+
+  const [gameStatus, setGameStatus] = useState('on')
+  const [perspective, changePerspective] = useState("bird's view")
+  const [currentToolOp, setCurrentToolOp] = useState('')
 
 
   return (
-      <>
 
-          <GameHeader 
-            modalctrl={() => setModalShow(true)}
-          />
-
-          <EndGameModal 
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-
-          <PerspectiveMenu 
-            changePerspective={() => setIsBirdEye((prev) => {return !prev})}
-          />
-
-          
-
-          <Menu {...props}
-          />
-
+      <Container
+      
         
-          <World 
+      >
+      <Row>
+        <GameMenu
+          gameStatus={gameStatus}
+          setGameStatus={setGameStatus}
+          setCurrentToolOp={setCurrentToolOp}
+        />
+      </Row>
+      <Row 
+        style={{
+          height: "80hv"
+        }}
+      >
+      <World 
+        {...props}
+        isBirdEye={(perspective === "bird's view")? true:false}
+        currentToolOp={currentToolOp}
+      />
+      </Row>
+      <Row>
+      <PerspectiveContext.Provider 
+        value={perspective}
+      >
+          <GameFooter
             {...props}
-            isBirdEye={isBirdEye}
+            changePerspective={changePerspective}
           />
+          
+      </PerspectiveContext.Provider>
+      </Row>
+    </Container>
 
-
-      </>
 
   )
 }

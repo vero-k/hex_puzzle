@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom"
 
-import Header from './components/controlpanels/Header';
+import {Header} from './components/controlpanels/Header';
 import Footer from './components/controlpanels/Footer';
 
 

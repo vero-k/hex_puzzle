@@ -57,7 +57,7 @@ export function GroundHex(props: any) {
   }
 
   const handleClick = (props: any, e: any) => {
-    if(status == 'neighbour'){
+    if(status === 'neighbour'){
       let shadowProps = props;
       props.makeAStep(tkey)
     }
@@ -65,7 +65,7 @@ export function GroundHex(props: any) {
 
   useFrame(({clock}) => {
 
-    if(status != "regular"){
+    if(status !== "regular"){
       const a = clock.getElapsedTime() 
       refGroundTile.current.position.y = Math.abs(0.2 * (Math.sin(3 * a)))
     }
