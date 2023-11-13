@@ -8,16 +8,10 @@ export const Header = () => {
                   <span className="navbar-brand">Cairo</span>
                   <ul className="nav justify-content-end">
                     <li className="nav-item">
-                      <a className="nav-link active" aria-current="page" href="#">Active</a>
+                      <a className="nav-link active" aria-current="page" href="#">About</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link disabled" href="#" tabIndex={-1} aria-disabled="true">Disabled</a>
+                      <a className="nav-link" href="#">Contact</a>
                     </li>
                   </ul>
                 </div>

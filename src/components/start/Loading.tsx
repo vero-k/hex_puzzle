@@ -1,15 +1,9 @@
 import axios from 'axios'
-
 import { useState, useEffect } from "react"
-
-import  {Game}  from './components/game/Game'
-
+import  {Game}  from '../game/Game'
 import { Buffer } from 'buffer'
-
 import Spinner from 'react-bootstrap/Spinner';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 
 interface HexImageData {
@@ -183,6 +177,26 @@ export default function Loading (props: any) {
   
       loadAsyncStuff();
 
+      
+      const handleUnload = async (e: any) => {
+
+        await axios.post(baseURL + 'erase/?userID=' + props.userID , {
+          headers: {
+            'Content-Type' : 'multipart/form-data'
+          }
+        })
+      
+        // Prevent the default action to ensure the request is sent
+        e.preventDefault();
+        e.returnValue = '';
+      };
+
+      window.addEventListener('beforeunload', handleUnload);
+
+      return () => {
+          window.removeEventListener('beforeunload', handleUnload);
+      };
+
 
   }, [])
 
@@ -200,7 +214,7 @@ export default function Loading (props: any) {
 
               <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
-                </Spinner>
+              </Spinner>
 
             </Container>
     

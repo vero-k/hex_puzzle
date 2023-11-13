@@ -1,9 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-
+import { useState, useEffect, useCallback } from 'react';
+import Form from 'react-bootstrap/Form';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,12 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 
-import Footer from './components/controlpanels/Footer'
-import {Header} from './components/controlpanels/Header'
+import Footer from '../controlpanels/Footer'
+import {Header} from '../controlpanels/Header'
 import Creation from './Creation'
 
 
-import ImageCrop from './components/start/ImageCrop'
+import ImageCrop from './ImageCrop'
 
 
 
@@ -233,7 +229,7 @@ export default function Start() {
                           { (choice === 'fromDevice') && 
                             <div>
                           <Form.Control type="file" accept="image/jpeg" onChange={handleFileRead}/>
-                          {croppedImage && <img src={croppedImage} />}
+                          {croppedImage && <img alt="" src={croppedImage} />}
                             </div>
                           }
 
@@ -241,7 +237,7 @@ export default function Start() {
                             <div>
                               <Form.Label>Select One</Form.Label>
                               <Form.Control type="input" accept="text" onChange={handleFileLibrary}/>
-                              {(croppedImage) && <img src={croppedImage} />}
+                              {(croppedImage) && <img alt="" src={croppedImage} />}
                             </div>
                           }
 
@@ -250,7 +246,7 @@ export default function Start() {
                               <button type="submit" className="btn btn-outline-dark" onClick={handleFileFetch}>Fetch Image</button>
                               <Form.Label>{ " Optional: Enter a topic for the Image " }</Form.Label>
                               <Form.Control type="input" accept="text" onChange={(e) => setImageTopic(e.target.value)}/>
-                              {(croppedImage) && <img src={croppedImage} />}
+                              {(croppedImage) && <img alt="" src={croppedImage} />}
                             </div>
                           }
 

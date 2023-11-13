@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { Route, Routes } from "react-router-dom"
 
-import Home from './Home'
-import Start from './Start'
+import Home from './components/start/Home'
+import Start from './components/start/Start'
 
 
 export default function App() {

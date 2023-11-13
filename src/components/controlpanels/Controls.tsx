@@ -1,15 +1,22 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { extend, useFrame, useThree } from '@react-three/fiber'
-import { MapControls } from '@react-three/drei'
+import type { MapControls as MapControlType } from '@react-three/drei';
+import {MapControls} from '@react-three/drei';
 
-extend({ MapControls })
+extend({ MapControls });
 
 export const Controls = (props: any) => {
-  const controls = useRef()
+
+  const controls = useRef<typeof MapControlType>(null)
+
   const { camera, gl } = useThree()
+
   useFrame(() => {
-    controls.current.update()
+    if(controls.current) {
+      controls.current.update()
+    }
   })
+
   return (
     <MapControls
       ref={controls}

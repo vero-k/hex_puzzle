@@ -1,8 +1,7 @@
 
 import { Link } from "react-router-dom"
-
-import {Header} from './components/controlpanels/Header';
-import Footer from './components/controlpanels/Footer';
+import {Header} from '../controlpanels/Header';
+import Footer from '../controlpanels/Footer';
 
 
 export default function Home() {

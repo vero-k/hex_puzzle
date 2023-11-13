@@ -18,7 +18,7 @@ export const World = (props: any) => {
 
     console.log("render World")
     
-    const [currentTile, setCurrentTileParent] = useState(props.currentConstellation.currentTile)
+    const [currentTile, setCurrentTile] = useState(props.currentConstellation.currentTile)
 
     return (
         <div
@@ -49,7 +49,7 @@ export const World = (props: any) => {
                 rotation={[Math.PI /2, 0, 0]}
                 position={[-10, -10, -10]}
                 currentTile={currentTile}
-                setCurrentTileParent={props.setCurrentTile}
+                setCurrentTileParent={setCurrentTile}
                 
                 />
                 
