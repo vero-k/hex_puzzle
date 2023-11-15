@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback} from 'react';
+import { useNavigate } from "react-router-dom"
+
 import Form from 'react-bootstrap/Form';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -9,8 +11,6 @@ import FormLabel from '@mui/material/FormLabel';
 
 import Footer from '../controlpanels/Footer'
 import {Header} from '../controlpanels/Header'
-import Creation from './Creation'
-
 
 import ImageCrop from './ImageCrop'
 
@@ -18,8 +18,9 @@ import ImageCrop from './ImageCrop'
 
 export default function Start() {
 
-  const [start, setStart] = useState(false)
+  const navigate = useNavigate()
 
+  const [name, setName] = useState('')
   const [choice, setChoice] = useState('fromDevice')
   const [fieldForm, setFieldForm] = useState('square')
   const [fieldSize, setFieldSize] = useState('medium')
@@ -45,7 +46,24 @@ export default function Start() {
 
   const startLoading =  (e: any) => {
     localStorage.clear()
-    setStart(true)
+    navigate('/loading', {
+      state: {
+        name: name,
+        orgWidth: orgWidth,
+        orgHeight: orgHeight,
+        imgWidth:imgWidth,
+        imgHeight:imgHeight,
+        imgTop:imgTop,
+        imgLeft:imgLeft,
+        imgType:imgType,
+        base64Image:base64Image,
+        imgFile:imgFile,
+        fieldForm:fieldForm,
+        fieldSize:fieldSize,
+        difficulty:difficulty,
+        choice:choice
+      }
+    })
   }
 
 
@@ -137,167 +155,145 @@ export default function Start() {
 
 
 
-  if(start){
-    return(
-      <>
-      <Creation
-        orgWidth={orgWidth}
-        orgHeight={orgHeight}
-        imgWidth={imgWidth}
-        imgHeight={imgHeight}
-        imgTop={imgTop}
-        imgLeft={imgLeft}
-        imgType={imgType}
-        base64Image={base64Image}
-        imgFile={imgFile}
-        fieldForm={fieldForm}
-        fieldSize={fieldSize}
-        difficulty={difficulty}
-        choice={choice}
-      />
-    </>
-    )
-    
 
-  } else {
-    return (
-      <>
-  
-              <Header />
+  return (
+    <>
 
-              {cropInProgress && 
-                      
+            <Header />
 
-                      <ImageCrop 
-                        image={base64Image}
-                        fieldForm={fieldForm}
-                        setImage={setBase64Image}
-                        setOrgHeight={setOrgHeight}
-                        setOrgWidth={setOrgWidth}
-                        setFieldForm={setFieldForm}
-                        setImgHeight={setImgHeight}
-                        setImgWidth={setImgWidth}
-                        setImgTop={setImgTop}
-                        setImgLeft={setImgLeft}
-                        setCropInProgress={setCropInProgress}
-                      />
+            {cropInProgress && 
+                    
+
+                    <ImageCrop 
+                      image={base64Image}
+                      fieldForm={fieldForm}
+                      setImage={setBase64Image}
+                      setOrgHeight={setOrgHeight}
+                      setOrgWidth={setOrgWidth}
+                      setFieldForm={setFieldForm}
+                      setImgHeight={setImgHeight}
+                      setImgWidth={setImgWidth}
+                      setImgTop={setImgTop}
+                      setImgLeft={setImgLeft}
+                      setCropInProgress={setCropInProgress}
+                    />
 
 
-              } 
-  
+            } 
+
+            <div className={"container-fluid"}>
+
               <div className={"container-fluid"}>
-  
-                <div className={"container-fluid"}>
-                  <div className={"container"}>
-                    <div className={"row justify-content-md-center pt-3 pb-4 mt-3 mb-4"}>
-  
-
-                      { false &&
-                        <Form.Group className="mb-3" controlId="formBasicText" >
-                        <Form.Label>Field Form</Form.Label>
-                        <Form.Select aria-label="Default select" value={fieldForm} onChange={(e) => setFieldForm(e.target.value)}>
-                          <option value="square">Square 1:1 </option>
-                          <option value="desktop">Desktop 2:1</option>
-                          <option value="mobile">Mobile 1:2</option>
-                        </Form.Select>
-                        <Form.Text className="text-muted">
-                          Optional.
-                        </Form.Text>
-                      </Form.Group>
-                      }
-
-                    <Form.Group controlId="formFile" className="mb-3">
-                      <FormControl>
-                        <FormLabel id="demo-radio-buttons-group-label">Select Base Image</FormLabel>
-                          <RadioGroup
-                            aria-labelledby="radio-group-imagechoice"
-                            defaultValue="fromDevice"
-                            name="radio-buttons-group"
-                            value={choice}
-                            onChange={handleChoiceChange}
-                          >
-                              <FormControlLabel value="fromDevice" control={<Radio />} label="From Device" />
-                              <FormControlLabel value="pick" control={<Radio />} label="Image from our Library" />
-                              <FormControlLabel value="fetch" control={<Radio />} label="Image from Unsplashed" />
+                <div className={"container"}>
+                  <div className={"row justify-content-md-center pt-3 pb-4 mt-3 mb-4"}>
 
 
-                          </RadioGroup>
-
-                        </FormControl>
-                      
-
-                          { (choice === 'fromDevice') && 
-                            <div>
-                          <Form.Control type="file" accept="image/jpeg" onChange={handleFileRead}/>
-                          {croppedImage && <img alt="" src={croppedImage} />}
-                            </div>
-                          }
-
-                          { (choice === 'pickIt') && 
-                            <div>
-                              <Form.Label>Select One</Form.Label>
-                              <Form.Control type="input" accept="text" onChange={handleFileLibrary}/>
-                              {(croppedImage) && <img alt="" src={croppedImage} />}
-                            </div>
-                          }
-
-                          { (choice === 'fetchIt') && 
-                            <div>
-                              <button type="submit" className="btn btn-outline-dark" onClick={handleFileFetch}>Fetch Image</button>
-                              <Form.Label>{ " Optional: Enter a topic for the Image " }</Form.Label>
-                              <Form.Control type="input" accept="text" onChange={(e) => setImageTopic(e.target.value)}/>
-                              {(croppedImage) && <img alt="" src={croppedImage} />}
-                            </div>
-                          }
-
-                          
-                      </Form.Group>
-                      
-                      
-
+                    { false &&
                       <Form.Group className="mb-3" controlId="formBasicText" >
-                        <Form.Label>Field Size</Form.Label>
-                        <Form.Select aria-label="Default select" value={fieldSize} onChange={(e) => setFieldSize(e.target.value)}>
-                          <option value="medium">Medium</option>
-                          <option value="large">Large</option>
-                          <option value="small">Small</option>
-                        </Form.Select>
-                        <Form.Text className="text-muted">
-                          Optional.
-                        </Form.Text>
-                      </Form.Group>
+                      <Form.Label>Field Form</Form.Label>
+                      <Form.Select aria-label="Default select" value={fieldForm} onChange={(e) => setFieldForm(e.target.value)}>
+                        <option value="square">Square 1:1 </option>
+                        <option value="desktop">Desktop 2:1</option>
+                        <option value="mobile">Mobile 1:2</option>
+                      </Form.Select>
+                      <Form.Text className="text-muted">
+                        Optional.
+                      </Form.Text>
+                    </Form.Group>
+                    }
+
+                  <Form.Group controlId="formFile" className="mb-3">
+                    <FormControl>
+                      <FormLabel id="demo-radio-buttons-group-label">Select Base Image</FormLabel>
+                        <RadioGroup
+                          aria-labelledby="radio-group-imagechoice"
+                          defaultValue="fromDevice"
+                          name="radio-buttons-group"
+                          value={choice}
+                          onChange={handleChoiceChange}
+                        >
+                            <FormControlLabel value="fromDevice" control={<Radio />} label="From Device" />
+                            <FormControlLabel value="pick" control={<Radio />} label="Image from our Library" />
+                            <FormControlLabel value="fetch" control={<Radio />} label="Image from Unsplashed" />
 
 
-                      <Form.Group className="mb-3" controlId="formBasicText" >
-                        <Form.Label>Difficulty</Form.Label>
-                        <Form.Select aria-label="Default select" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-                          <option value="easy">Easy</option>
-                          <option value="normal">Normal</option>
-                          <option value="advanced">Advanced</option>
-                          <option value="hard">Hard</option>
-                          <option value="expert">Expert</option>
-                        </Form.Select>
-                        <Form.Text className="text-muted">
-                          Optional.
-                        </Form.Text>
-                      </Form.Group>
+                        </RadioGroup>
+
+                      </FormControl>
+                    
+
+                        { (choice === 'fromDevice') && 
+                          <div>
+                        <Form.Control type="file" accept="image/jpeg" onChange={handleFileRead}/>
+                        {croppedImage && <img alt="" src={croppedImage} />}
+                          </div>
+                        }
+
+                        { (choice === 'pickIt') && 
+                          <div>
+                            <Form.Label>Select One</Form.Label>
+                            <Form.Control type="input" accept="text" onChange={handleFileLibrary}/>
+                            {(croppedImage) && <img alt="" src={croppedImage} />}
+                          </div>
+                        }
+
+                        { (choice === 'fetchIt') && 
+                          <div>
+                            <button type="submit" className="btn btn-outline-dark" onClick={handleFileFetch}>Fetch Image</button>
+                            <Form.Label>{ " Optional: Enter a topic for the Image " }</Form.Label>
+                            <Form.Control type="input" accept="text" onChange={(e) => setImageTopic(e.target.value)}/>
+                            {(croppedImage) && <img alt="" src={croppedImage} />}
+                          </div>
+                        }
+
+                        
+                    </Form.Group>
+                    
+                    
+
+                    <Form.Group className="mb-3" controlId="formBasicText" >
+                      <Form.Label>Field Size</Form.Label>
+                      <Form.Select aria-label="Default select" value={fieldSize} onChange={(e) => setFieldSize(e.target.value)}>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="small">Small</option>
+                      </Form.Select>
+                      <Form.Text className="text-muted">
+                        Optional.
+                      </Form.Text>
+                    </Form.Group>
 
 
-                      <Form.Group>
-                        <button type="submit" className="btn btn-outline-dark" onClick={startLoading}>Start Game</button>
-                      </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicText" >
+                      <Form.Label>Difficulty</Form.Label>
+                      <Form.Select aria-label="Default select" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                        <option value="easy">Easy</option>
+                        <option value="normal">Normal</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="hard">Hard</option>
+                        <option value="expert">Expert</option>
+                      </Form.Select>
+                      <Form.Text className="text-muted">
+                        Optional.
+                      </Form.Text>
+                    </Form.Group>
 
-  
-                    </div>
+
+                    <Form.Group>
+                      <button type="submit" className="btn btn-outline-dark" onClick={startLoading}>Start Game</button>
+                    </Form.Group>
+
+
                   </div>
                 </div>
               </div>
+            </div>
+
+      <Footer />
+
+    </>
+  )
   
-        <Footer />
-  
-      </>
-    )
-  }
 
 }
 

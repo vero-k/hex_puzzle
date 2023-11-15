@@ -1,3 +1,5 @@
+import React, {useContext} from 'react'
+import GameContext from '../context/GameContext'
 
 import { nanoid } from 'nanoid'
 
@@ -84,22 +86,22 @@ export default function Creation(props: any) {
 
 
 
-    const baseImageString = props.base64Image
+/*     const baseImageString = props.base64Image
     const baseImageFile = props.imgFile
 
     const userID: string = nanoid()
-
-
+ */
+/* 
     const gameStats = {
         score : 0,
         level : 1,
         startingTile: 0,
         difficulty: props.difficulty,
-      }
+      } */
   
     //localStorage.setItem('gameStats', JSON.stringify(gameStats))
   
-    let imgType: string = 'jpg'
+   /*  let imgType: string = 'jpg'
 
     if(props.imgType.includes("png")){
         imgType = 'png'
@@ -113,11 +115,11 @@ export default function Creation(props: any) {
       imgTop: props.imgTop,
       imgLeft: props.imgLeft,
       imgType: imgType,
-    }
+    } */
 
     //localStorage.setItem('baseImgStats', JSON.stringify(baseImgStats))
 
-    const GRIDWIDTHCOUNT = GRIDFORMS[props.fieldForm][0] * GRIDSIZES[props.fieldSize]
+    /* const GRIDWIDTHCOUNT = GRIDFORMS[props.fieldForm][0] * GRIDSIZES[props.fieldSize]
     const GRIDHEIGHTCOUNT = GRIDFORMS[props.fieldForm][1] * GRIDSIZES[props.fieldSize]
     const GRIDCOUNT = GRIDWIDTHCOUNT * GRIDWIDTHCOUNT
 
@@ -136,22 +138,22 @@ export default function Creation(props: any) {
         hexVerticalSpacing: VERTICAL_SPACING,
         gridWidth: (GRIDWIDTHCOUNT - 1) * HORIZONTAL_SPACING + HEXWIDTH,
         gridHeight: Math.floor(GRIDHEIGHTCOUNT * HEXHEIGHT + HEXHEIGHT / 2.0),
-    }
+    } */
   
     //localStorage.setItem('gridConstants', JSON.stringify(gridConstants))
   
-    const gridImgAbsolutes = {
+    /* const gridImgAbsolutes = {
         hexWidthAbsolute: Math.floor(baseImgStats.imgWidth / gridConstants.gridWidthCount),
         hexRadiusAbsolute: Math.floor(baseImgStats.imgWidth / gridConstants.gridWidthCount) / 2,
         hexHeightAbsolute: Math.floor(Math.floor(baseImgStats.imgHeight / gridConstants.gridHeightCount) / 2.0 * Math.sqrt(3)),
 
         gridWidthAbsolute:  gridConstants.gridWidthCount * Math.floor(baseImgStats.imgWidth / gridConstants.gridWidthCount),
         gridHeightAbsolute:  gridConstants.gridHeightCount * Math.floor(Math.floor(baseImgStats.imgHeight / gridConstants.gridHeightCount) / 2.0 * Math.sqrt(3)),
-    }
+    } */
   
     //localStorage.setItem('gridImgAbsolutes', JSON.stringify(gridImgAbsolutes))
   
-    const islandTiles = [Math.floor(gridConstants.gridCount * Math.random()), Math.floor(gridConstants.gridCount * Math.random()), Math.floor(gridConstants.gridCount * Math.random())]
+    /* const islandTiles = [Math.floor(gridConstants.gridCount * Math.random()), Math.floor(gridConstants.gridCount * Math.random()), Math.floor(gridConstants.gridCount * Math.random())]
 
     const currentConstellation = {
         currentTile: STARTING_TILE,
@@ -161,7 +163,7 @@ export default function Creation(props: any) {
         currentHexBase: [STARTING_TILE, ].concat(islandTiles),
         currentHexGround: [STARTING_TILE, STARTING_TILE + 1, STARTING_TILE + gridConstants.gridHeightCount, ].concat(islandTiles),
     }
-
+ */
     //localStorage.setItem('currentConstellation', JSON.stringify(currentConstellation))
   
 
@@ -330,23 +332,20 @@ export default function Creation(props: any) {
 
 
   return (
-      <>
 
-              <Loading 
-                  {...props}
-                  userID={userID}
-                  gameStats={gameStats}
-                  baseImgStats={baseImgStats}
-                  baseImageFile={baseImageFile}
-                  baseImageString={baseImageString}
-                  gridConstants={gridConstants}
-                  gridImgAbsolutes={gridImgAbsolutes}
-                  currentConstellation={currentConstellation}
-                  hexArray={hexArray}
-                  hexTable={hexTable}
-              />
-      
-      </>
+    <Loading 
+        {...props}
+        userID={userID}
+        gameStats={gameStats}
+        baseImgStats={baseImgStats}
+        baseImageFile={baseImageFile}
+        baseImageString={baseImageString}
+        gridConstants={gridConstants}
+        gridImgAbsolutes={gridImgAbsolutes}
+        currentConstellation={currentConstellation}
+        hexArray={hexArray}
+        hexTable={hexTable}
+    />
 
   )
     

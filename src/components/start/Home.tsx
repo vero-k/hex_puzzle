@@ -24,7 +24,7 @@ export default function Home() {
                   <h1 className="display-4 fw-bold lh-1">Cairo</h1>
                   <p className="lead">Walk the world, fix the ground you walk on.</p>
                   <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                    <button type="button" className="btn btn-outline-dark px-4 me-md-2 fw-bold"><Link to="/start">Start Playing</Link></button>
+                    <button type="button" className="btn btn-outline-dark px-4 me-md-2 fw-bold"><Link to="/begin">Start Playing</Link></button>
                     
                   </div>
                 </div>

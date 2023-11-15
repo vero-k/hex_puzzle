@@ -8,10 +8,23 @@ import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
+import MenuContext from '../context/MenuContext';
+import { useContext, useState, useEffect} from 'react';
+
+
 
 export const GameMenu = (props: any) => {
 
-  
+    const { setGameStatus } = useContext(MenuContext)
+    const { gameStatus } = useContext(MenuContext)
+    const [gameState, setGameState] = useState(gameStatus)
+    
+
+    const handleExit = () => {
+      setGameStatus()
+      setGameState()
+    }
+
     const handleClickMirror = () => {
       props.setCurrentToolOp("mirror")
     }
@@ -39,6 +52,11 @@ export const GameMenu = (props: any) => {
     const handleClickWrench = () => {
       props.setCurrentToolOp("deform")
     }
+
+    useEffect(() => {
+      // erase 
+    }, [setGameState])
+
 
 
     return (
@@ -198,7 +216,7 @@ export const GameMenu = (props: any) => {
       
           </Tab>
           <Tab eventKey="exit" title="Exit">
-            <Button variant="primary" onClick={() => props.setGameStatus("off")}>
+            <Button variant="primary" onClick={handleExit}>
                 {'Exit Game'}
             </Button>
           </Tab>
