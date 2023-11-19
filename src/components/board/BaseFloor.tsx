@@ -1,9 +1,9 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
+import GameContext from '../context/GameContext';
+import MenuContext from '../context/MenuContext';
 
 const loader = new TextureLoader()
-
-
 
 
 export function BaseHex(props: any) {
@@ -12,20 +12,25 @@ export function BaseHex(props: any) {
   
   const [status, setStatus] = useState<string>(props.status)
 
-  const trackerTable = props.baseImgTable.get(tkey)
+  const {baseImgTable, gridConstants, modTracker} = useContext(GameContext)
+
+  const trackerTable = baseImgTable.get(tkey)
   const table = trackerTable.modMap
 
   const [currentTextureNr, setCurrentTextureNr] = useState<number>(trackerTable.currentListing)
   const [currentTextureKey, setCurrentTextureKey] = useState<string>(table.get(trackerTable.currentListing).type) 
   const [currentTexture, setCurrentTexture] = useState(() => loader.load(table.get(trackerTable.currentListing).image))
-  
+ 
+  const {currentToolOp} = useContext(MenuContext)
+
+
   const geo = useRef(null)
 
   
   const changeTexture = (props: any, e: any) => {
     if(currentTextureKey){
       const nr = currentTextureNr
-      if(currentTextureNr > 0 && props.currentToolOp === currentTextureKey){
+      if(currentTextureNr > 0 && currentToolOp === currentTextureKey){
         const newNr = currentTextureNr - 1
         const key = table.get(newNr).type
         const img = loader.load(table.get(newNr).image)
@@ -48,7 +53,7 @@ export function BaseHex(props: any) {
 
         onDoubleClick={(e) => changeTexture(props, e)}
         >
-      <cylinderGeometry ref={geo} args={[props.gridConstants.hexRadius, props.gridConstants.hexRadius, 0.1, 6]} />
+      <cylinderGeometry ref={geo} args={[gridConstants.hexRadius, gridConstants.hexRadius, 0.1, 6]} />
       <meshStandardMaterial 
         map={currentTexture}  
         metalness={0.5}
@@ -62,15 +67,18 @@ export function BaseHex(props: any) {
 
 export function BaseFloor(props: any) {
 
+  const {currentConstellation} = useContext(GameContext)
+  const {hexTable} = useContext(GameContext)
+
 
   return (
     <group
       {...props}
-      key={props.currentTile}
+      key={currentConstellation.currentTile}
       position={[0, 0, 0]}
     >
-        {props.currentConstellation.currentHexBase.map((hexKey: number) => {
-          const hex = props.hexTable.get(hexKey)
+        {currentConstellation.currentHexBase.map((hexKey: number) => {
+          const hex = hexTable.get(hexKey)
           return (
             <BaseHex
               {...props}

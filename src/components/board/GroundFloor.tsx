@@ -1,9 +1,9 @@
 
-import { useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState, useEffect } from 'react';
+import { useFrame, useThree, } from '@react-three/fiber';
+import { useRef, useState, useEffect, useContext } from 'react';
 import { Mesh } from 'three';
 
-
+import GameContext from '../context/GameContext';
 ////
 
 interface HexState {
@@ -43,9 +43,10 @@ export function GroundHex(props: any) {
   const tkey = props.tkey;
   const [status, setStatus] = useState(props.status)
   const [groundColor, setGroundColor] = useState(groundColors.mouseOut[props.status as keyof HexState])
+  const {gridConstants } = useContext(GameContext)
 
 
-  /// event handlers
+  // event handlers
 
   const handlePointerEnter = () => {
     console.log(tkey + "  x: " + props.x + "  y: " + props.y )
@@ -73,10 +74,6 @@ export function GroundHex(props: any) {
   });
 
 
-  useEffect(() => {
-    
-  })
-
   return (
     <group
       {... props}
@@ -93,7 +90,7 @@ export function GroundHex(props: any) {
         
         >
 
-        <cylinderGeometry args={[props.gridConstants.hexRadius, props.gridConstants.hexRadius, 0.1, 6]} />
+        <cylinderGeometry args={[gridConstants.hexRadius, gridConstants.hexRadius, 0.1, 6]} />
 
         <meshPhysicalMaterial 
           transparent={true}
@@ -119,15 +116,17 @@ export function GroundHex(props: any) {
 export function GroundFloor(props: any) {
 
   
+  const {currentConstellation} = useContext(GameContext)
+  const {hexTable} = useContext(GameContext)
 
   return (
     <group
       {...props}
-      key={props.currentTile}
+      key={currentConstellation.currentTile}
       position={[0, 0.2, 0]}
     >
-        {props.currentConstellation.currentHexGround.map((hexKey: number) => {
-          const hex = props.hexTable.get(hexKey)
+        {currentConstellation.currentHexGround.map((hexKey: number) => {
+          const hex = hexTable.get(hexKey)
           return (
             <GroundHex
               {...props}

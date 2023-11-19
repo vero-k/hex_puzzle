@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import MenuContext from './MenuContext';
 
 
@@ -18,3 +18,5 @@ export const MenuProvider = ({ children }) => {
       </MenuContext.Provider>
     );
   };
+
+export default MenuProvider;

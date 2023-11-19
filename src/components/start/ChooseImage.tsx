@@ -16,17 +16,14 @@ import ImageCrop from './ImageCrop'
 
 
 
-export default function Start() {
+export default function ChooseImage() {
 
   const navigate = useNavigate()
 
-  const [name, setName] = useState('')
   const [choice, setChoice] = useState('fromDevice')
   const [fieldForm, setFieldForm] = useState('square')
   const [fieldSize, setFieldSize] = useState('medium')
   const [difficulty, setDifficulty] = useState('normal')
-
-  const [imageTopic, setImageTopic] = useState('')
 
   const [orgWidth, setOrgWidth] = useState(0)
   const [orgHeight, setOrgHeight] = useState(0)
@@ -46,9 +43,8 @@ export default function Start() {
 
   const startLoading =  (e: any) => {
     localStorage.clear()
-    navigate('/loading', {
+    navigate('/loading-p1', {
       state: {
-        name: name,
         orgWidth: orgWidth,
         orgHeight: orgHeight,
         imgWidth:imgWidth,
@@ -233,15 +229,6 @@ export default function Start() {
                           <div>
                             <Form.Label>Select One</Form.Label>
                             <Form.Control type="input" accept="text" onChange={handleFileLibrary}/>
-                            {(croppedImage) && <img alt="" src={croppedImage} />}
-                          </div>
-                        }
-
-                        { (choice === 'fetchIt') && 
-                          <div>
-                            <button type="submit" className="btn btn-outline-dark" onClick={handleFileFetch}>Fetch Image</button>
-                            <Form.Label>{ " Optional: Enter a topic for the Image " }</Form.Label>
-                            <Form.Control type="input" accept="text" onChange={(e) => setImageTopic(e.target.value)}/>
                             {(croppedImage) && <img alt="" src={croppedImage} />}
                           </div>
                         }

@@ -9,53 +9,46 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import MenuContext from '../context/MenuContext';
-import { useContext, useState, useEffect} from 'react';
+import { useContext } from 'react';
 
 
 
 export const GameMenu = (props: any) => {
 
-    const { setGameStatus } = useContext(MenuContext)
-    const { gameStatus } = useContext(MenuContext)
-    const [gameState, setGameState] = useState(gameStatus)
-    
+    const { gameStatus, setGameStatus } = useContext(MenuContext)
+    const { currentToolOp, setCurrentToolOp} = useContext(MenuContext)
 
     const handleExit = () => {
-      setGameStatus()
-      setGameState()
+      setGameStatus('off')
     }
 
     const handleClickMirror = () => {
-      props.setCurrentToolOp("mirror")
+      setCurrentToolOp("mirror")
     }
 
     const handleClickWheel = () => {
-      props.setCurrentToolOp("rotate")
+      setCurrentToolOp("rotate")
     }
 
     const handleClickGlasses = () => {
-      props.setCurrentToolOp("blur")
+      setCurrentToolOp("blur")
     }
 
     const handleClickWhisk = () => {
-      props.setCurrentToolOp("blend")
+      setCurrentToolOp("blend")
     }
 
     const handleClickPaint = () => {
-      props.setCurrentToolOp("colorinvert")
+      setCurrentToolOp("colorinvert")
     }
 
     const handleClickShoo = () => {
-      props.setCurrentToolOp("cat")
+      setCurrentToolOp("cat")
     }
 
     const handleClickWrench = () => {
-      props.setCurrentToolOp("deform")
+      setCurrentToolOp("deform")
     }
-
-    useEffect(() => {
-      // erase 
-    }, [setGameState])
 
 
 
@@ -79,7 +72,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "mirror")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "mirror")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickMirror}
                     >
                       <Image
@@ -99,7 +92,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "blur")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "blur")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickGlasses}
                     >
                       <Image
@@ -118,7 +111,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "blend")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "blend")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickWhisk}
                     >
                       <Image
@@ -137,7 +130,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "deform")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "deform")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickWrench}
                     >
                       <Image
@@ -156,7 +149,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "cat")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "cat")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickShoo}
                     >
                       <Image
@@ -175,7 +168,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "rotate")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "rotate")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickWheel}
                     >
                       <Image
@@ -194,7 +187,7 @@ export const GameMenu = (props: any) => {
                   {({ ref, ...triggerHandler }) => (
                     <div
                       {...triggerHandler}
-                      className={(props.currentToolOp === "colorinvert")? "active-toolbar-div":"toolbar-div"}
+                      className={(currentToolOp === "colorinvert")? "active-toolbar-div":"toolbar-div"}
                       onClick={handleClickPaint}
                     >
                       <Image

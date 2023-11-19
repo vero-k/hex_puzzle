@@ -132,3 +132,63 @@ box-shadow:  5px 5px 10px #5a5a5a,
   width: 40px;
   height: 40px;
 }
+
+
+
+.container-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Adjust this value if needed */
+}
+
+.spinner {
+  width: 100vw; /* 33% of the viewport width */
+  /* 33% of the viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Additional styles to ensure the spinner scales correctly */
+.spinner svg {
+  width: 100%;
+  height: auto;
+  transform: scale(1.5); /* Scale the spinner as needed */
+}
+
+
+
+/* Wrapper class */
+.home-image-wrapper {
+  width: 100%; /* Full width */
+  overflow: hidden; /* Hide parts of the image that overflow */
+}
+
+/* Base styles for the image */
+.home-image {
+  width: 200px; /* Full width of the wrapper */
+  height: 200px; /* Full height of the wrapper */
+  object-fit: cover; /* Crop and scale the image */
+  
+}
+
+/* Desktop styles (2:1 aspect ratio) */
+@media (min-width: 992px) {
+  .home-image-wrapper {
+      padding-top: 50%; /* Aspect ratio: height is 50% of width */
+      padding-bottom: 50%;
+  }
+}
+
+/* Mobile styles (1:1 aspect ratio) */
+@media (max-width: 991.98px) {
+  .home-image-wrapper {
+      padding-top: 100%; /* Aspect ratio: height is equal to width */
+  }
+}
+
+
+.canvas{
+  height: 80vh;
+}

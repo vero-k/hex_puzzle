@@ -1,13 +1,11 @@
-import { useState, useEffect, useCallback, useContext} from 'react';
+import { useState, useContext, useEffect} from 'react';
 import { useNavigate, useLocation } from "react-router-dom"
 
 import GameContext from '../context/GameContext'
 
 import Form from 'react-bootstrap/Form';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 
@@ -15,69 +13,45 @@ import Footer from '../controlpanels/Footer'
 import {Header} from '../controlpanels/Header'
 
 import axios from 'axios'
-import { nanoid } from 'nanoid'
-
+import { baseURL } from '../context/Constants';
 
 export default function Begin() {
 
-  const location = useLocation()
   const navigate = useNavigate()
 
-  const [name, setName] = useState('anonymous')
-
-  const { setUserName } = useContext(GameContext)
-
-  const { setUserID } = useContext(GameContext)
+  const [name, setName] = useState('anonymous');
+  const { setUserName, userID, setUserID } = useContext(GameContext)
 
 
   const begin = async (e: any) => {
+      try {
+        const response = await axios.get(baseURL + 'newplayer/', { params: { name } });
+        const receivedId = response.data.id; 
+        setUserID(receivedId); 
+        setUserName(name)
+      } catch (error) {
+        console.error('Error fetching ID:', error);
+      }
 
-    localStorage.clear()
-    setUserName(location.state?.name)
+  }  
 
-    const userID = nanoid()
-    setUserID(userID)
-
-    const baseURL = "http://127.0.0.1:5000/"
-
-    const formData = new FormData()
-    formData.append('userName', location.state?.name)
-    formData.append('userID', userID)
-    
-    
-    const loadAsyncStuff = async () => {
-
-        try {
-
-          await axios.post(baseURL + 'newUser/', formData, {
-            headers: {
-              'Content-Type' : 'multipart/form-data'
-            }
-          })
-
-          navigate(
-            '/chooseImage'
-          )
-        } catch {
-
-        }
-
-    loadAsyncStuff();
-
-    }
-
-    }  
-
-  const handleNameInput = (event: any) => {
-    setName(event.target.value)
+  const handleNameInput = (e: any) => {
+    setName(e.target.value)
   }
+
+  useEffect(() => {
+    if(userID){
+      navigate('/chooseImage'); 
+    }
+    
+  }, [userID, navigate])
+
+
 
   return (
     <>
 
             <Header />
-
-        
 
             <div className={"container-fluid"}>
 

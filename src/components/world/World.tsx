@@ -10,28 +10,24 @@ import { Canvas, useThree} from "@react-three/fiber"
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
 
-import { useRef, useState} from "react"
+import { useRef, useState, useContext} from "react"
 import { Controls } from '../controlpanels/Controls'
+
+import GameContext from "../context/GameContext"
 
 
 export const World = (props: any) => {
 
-    console.log("render World")
-    
-    const [currentTile, setCurrentTile] = useState(props.currentConstellation.currentTile)
+    const { currentConstellation } = useContext(GameContext)
+    const { setCurrentConstellation } = useContext(GameContext)
+
 
     return (
-        <div
-            style={{height:"80vh"}}
-        >
+        <div className="canvas">
 
             <Canvas>
 
-
-                <Controls 
-                    currentTile={currentTile}
-                />
-                
+                <Controls />
                 
 
                 <ambientLight color={"white"} intensity={0.5} />
@@ -48,9 +44,6 @@ export const World = (props: any) => {
                 {...props}
                 rotation={[Math.PI /2, 0, 0]}
                 position={[-10, -10, -10]}
-                currentTile={currentTile}
-                setCurrentTileParent={setCurrentTile}
-                
                 />
                 
                 </PerspectiveCamera>

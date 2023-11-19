@@ -1,5 +1,5 @@
 import React from 'react';
 
-const MenuContext = React.createContext();
+const MenuContext = React.createContext({});
 
 export default MenuContext;
