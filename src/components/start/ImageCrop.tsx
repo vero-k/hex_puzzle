@@ -30,7 +30,6 @@ const ImageCrop = (props: any) => {
   );
 
   const cropFinish = () => {
-        console.log(croppedAreaPixels)
         props.setImgWidth(croppedAreaPixels.width)
         props.setImgHeight(croppedAreaPixels.height)
         props.setImgTop(croppedAreaPixels.y)

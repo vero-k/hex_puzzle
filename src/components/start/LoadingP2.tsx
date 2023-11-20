@@ -20,6 +20,52 @@ export default function LoadingP2 (props: any) {
 
   const { userID, gameID, tableRaster, setTableRaster, gridConstants } = useContext(GameContext);
 
+  /* 
+  useEffect(() => {
+
+    const toBase64 = (url, index) => {
+      return axios
+          .get(url, {
+              responseType: 'arraybuffer'
+          })
+          .then(response => ({Buffer.from(response.data, 'binary').toString('base64'), index})
+          .catch(error => console.error('Error converting image to Base64', error));
+    };
+
+
+    const fetchImages = async () => {
+      const requests = [];
+
+      const response = await axios.get(`${baseURL}get-all-image/?count=${gridConstants.count}&userID=${userID}`)
+      const updatedTable = tableRaster
+
+      if (response.data && response.data.length > 0) {
+
+        let i = 0
+        for (const imageUrl of response.data) {
+          const {base64Image, index} = await toBase64(imageUrl, i)
+
+          const responseBase64 = 
+          updatedTable.get(index).modMap.set(0, {
+            listing: 0,
+            type: 'original',
+            image: `data:image/jpeg;base64,${base64Image}`,
+            tkey: index,
+          });
+        }
+
+      }
+
+      setTableRaster(updatedTable);
+      navigate('/loading-p3');
+
+      
+    };
+
+    fetchImages();
+  }, [userID, gameID, gridConstants, tableRaster, setTableRaster, navigate]);
+ */
+
 
   useEffect(() => {
     const fetchImages = async () => {
