@@ -15,7 +15,7 @@ import { baseURL } from '../context/Constants'
 
 
 ////////////////////////////////////////////////////////////////
-export default function LoadingP15 (props: any) {
+export default function LoadingTwo (props: any) {
 
   const navigate = useNavigate();
   const { gameID, setModTracker, setTableRaster } = useContext(GameContext);
@@ -49,9 +49,9 @@ export default function LoadingP15 (props: any) {
         setModTracker(newModTracker);
         setTableRaster(newTableRaster);
 
-        navigate('/loading-p2');
+        navigate('/loading-p3');
       } catch (error) {
-        console.error("Error in LoadingP15:", error);
+        console.error("Error in LoadingTwo:", error);
       }
     };
 
@@ -71,7 +71,7 @@ export default function LoadingP15 (props: any) {
     >
       <Spinner className="spinner" animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
-          <span>PART 15</span>
+          <span>PART two</span>
       </Spinner>
 
     </Container>

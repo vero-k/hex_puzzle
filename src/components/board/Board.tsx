@@ -48,7 +48,7 @@ export default function Board(props: any){
         const nextCurrentHex = hexTable.get(nextCurrentTile)
         const nextCurrentNeighbours = nextCurrentHex.neighbours
 
-        nextCurrentHex.forEach((i: number) => {
+        nextCurrentNeighbours.forEach((i: number) => {
             if(!currentConstellation.currentHexBase.includes(i)){
                 currentConstellation.currentHexBase.push(i)
             }
@@ -56,7 +56,7 @@ export default function Board(props: any){
                 currentConstellation.currentHexGround.push(i)
             }
             if(!currentConstellation.currentHexComplete.includes(i)){
-                props.currentConstellation.currentHexComplete.push(i)
+                currentConstellation.currentHexComplete.push(i)
             }
             
             const neighbour = hexTable.get(i)

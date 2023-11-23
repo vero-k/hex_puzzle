@@ -2,6 +2,7 @@
 import { useFrame, useThree, } from '@react-three/fiber';
 import { useRef, useState, useEffect, useContext } from 'react';
 import { Mesh } from 'three';
+import { Selection, Select, EffectComposer, Outline } from '@react-three/postprocessing'
 
 import GameContext from '../context/GameContext';
 ////
@@ -20,14 +21,14 @@ interface MouseState {
 
 const groundColors: MouseState = {
   mouseOut : {
-    regular: 0x7abf69,
-    current: 0xc94b1a,
-    neighbour: 0x23f7cd,
+    regular: 0xffffff,
+    current: 0xffffff,
+    neighbour: 0xffffff,
   },
   mouseIn : {
-    regular: 0xbf697d,
-    current: 0xc99b1a,
-    neighbour: 0xd9fcf5,
+    regular: 0xaaaaaa,
+    current: 0xbbbbbb,
+    neighbour: 0xcccccc,
   }
 }
 
@@ -49,7 +50,6 @@ export function GroundHex(props: any) {
   // event handlers
 
   const handlePointerEnter = () => {
-    console.log(tkey + "  x: " + props.x + "  y: " + props.y )
     setGroundColor(groundColors.mouseIn[status as keyof HexState])
   }
 
@@ -75,6 +75,7 @@ export function GroundHex(props: any) {
 
 
   return (
+
     <group
       {... props}
       ref={refGroundTile}
@@ -86,6 +87,7 @@ export function GroundHex(props: any) {
       onPointerEnter={handlePointerEnter} // see note 1
       onPointerLeave={handlePointerLeave} // see note 1
     >
+      <Select enabled={status==="neighbour"}>
       <mesh 
         
         >
@@ -94,7 +96,7 @@ export function GroundHex(props: any) {
 
         <meshPhysicalMaterial 
           transparent={true}
-          opacity={0.3}
+          opacity={0.1}
           transmission={0.9}  
           color={groundColor}
           sheen={0.5}
@@ -103,7 +105,7 @@ export function GroundHex(props: any) {
       </mesh>
 
 
-  
+      </Select>
     </group>
     
   );

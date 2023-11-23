@@ -14,11 +14,49 @@ import { baseURL } from '../context/Constants'
 
 
 ////////////////////////////////////////////////////////////////
-export default function LoadingP2 (props: any) {
+export default function LoadingThree (props: any) {
 
   const navigate = useNavigate()
 
   const { userID, gameID, tableRaster, setTableRaster, gridConstants } = useContext(GameContext);
+
+  
+  useEffect(() => {
+
+    const toBase64 = (url, index) => {
+      return axios
+          .get(url, {
+              responseType: 'arraybuffer'
+          })
+          .then(response => ({Buffer.from(response.data, 'binary').toString('base64'), index})
+          .catch(error => console.error('Error converting image to Base64', error));
+    };
+
+
+    const fetchImages = async () => {
+
+      const response = await axios.get(`${baseURL}get-all-image/?count=${gridConstants.count}&userID=${userID}`)
+      const updatedTable = tableRaster
+
+      if (response.data && response.data.length > 0) {
+
+        let i = 0
+        for (const imageUrl of response.data) {
+          const {base64Image, index} = await toBase64(imageUrl, i)
+          updatedTable.get(index).modMap.get(0).set('image', `data:image/jpeg;base64,${base64Image}`)
+        }
+
+      }
+
+      setTableRaster(updatedTable);
+      navigate('/loading-p4');
+
+      
+    };
+
+    fetchImages();
+  }, [userID, gameID, gridConstants, tableRaster, setTableRaster, navigate]);
+ 
 
 
   useEffect(() => {
@@ -48,7 +86,7 @@ export default function LoadingP2 (props: any) {
         });
 
         setTableRaster(updatedTable);
-        navigate('/loading-p3');
+        navigate('/loading-p2');
       } catch (error) {
         console.error("Error loading images:", error);
         // Handle the error appropriately here
@@ -72,7 +110,7 @@ export default function LoadingP2 (props: any) {
       >
         <Spinner className="spinner" animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-            <span>PART 2</span>
+            <span>PART three</span>
         </Spinner>
 
       </Container>
